@@ -1,0 +1,20 @@
+/* make all components in the middle */
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  text-align: center;
+  place-items: center;
+  display: flex;
+  
+}
+
+.modal-backdrop {
+  filter: blur(30px) !important;
+  -webkit-filter: blur(30px) !important;
+}
+
+/* important must be used in the css file, can not use in the internal jsx style */
+.custom-modal .modal-content {
+  border-radius: 30px !important; /* 使用 !important 确保覆盖其他样式 */
+}
+
