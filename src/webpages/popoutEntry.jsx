@@ -8,7 +8,7 @@ import { HistogramModal } from './histogramModal'; // Import the new modal compo
   
   export function PopoutEntry() {
 
-    const [markingResultsModalShow, setMarkingResultsModalShow] = useState(false);
+    const [markingResultsModalShow, setMarkingResultsModalShow] = useState(true);
     const [histogramModalShow, setHistogramModalShow] = useState(false);
     const [confirmationModalShow, setConfirmationModalShow] = useState(false);
 
@@ -31,9 +31,6 @@ import { HistogramModal } from './histogramModal'; // Import the new modal compo
     
     return (
       <>
-        <Button variant="primary" onClick={() => setMarkingResultsModalShow(true)}>
-          Launch 
-        </Button>
 
         <MarkingResultsModal
           show={markingResultsModalShow}

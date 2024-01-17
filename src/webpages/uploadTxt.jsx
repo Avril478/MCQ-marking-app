@@ -2,10 +2,30 @@ import React from 'react';
 import { Upload } from '@douyinfe/semi-ui';
 import UploadIcon from '../assets/upload.png'; 
 
-export const UploadTxt = () => {
+export const UploadTxt = ({ onContinueAfterUpload }) => {
+   
     let limit = 1;
     let onChange = props => {
-        console.log(props.fileList);}
+        // Assuming props.fileList is an array of objects
+        props.fileList.forEach((file) => {
+            console.log('bbbbbb-file.status', file.status);
+            // Access the 'status' key of each file object
+            if(file.status === 'success'){
+                console.log('Upload successful-file(obj)', file);
+                console.log('Upload successful-file.name', file.name);
+                //Ask the user if they want to proceed
+                const wantToContinue = window.confirm('Do you want to go to the Marking page?');
+                //if yes, choice -true,  if cancle, choice can be false.
+                console.log('choice:',wantToContinue);
+                if (wantToContinue === true) {
+                    onContinueAfterUpload();// Call the function passed from App
+                    // Optionally, call a function passed from the parent component
+                } else {
+                   // do nothing, stay in current page
+                }
+            }
+        });
+    }
         return (
             <div style={{ paddingBottom: '100px' }}>
             <Upload

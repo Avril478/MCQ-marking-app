@@ -3,22 +3,24 @@ import { Upload } from '@douyinfe/semi-ui';
 import UploadIcon from '../assets/upload.png'; 
 
 
-export const UploadCsv = ({ onUploadSuccess }) => {
+export const UploadCsv = ({ onContinueAfterUpload }) => {
     
     let limit = 1;
     let onChange = props => {
         // Assuming props.fileList is an array of objects
         props.fileList.forEach((file) => {
-            console.log('aaaaa:', file.status);
+            console.log('aaaaa-file.status:', file.status);
             // Access the 'status' key of each file object
             if(file.status === 'success'){
                 console.log('Upload successful-file', file);
+                console.log('Upload successful-file.name', file.name);
+
                 // Ask the user if they want to proceed
-                const makeChoice = window.confirm('File uploaded successfully. Do you want to go to the Upload TXT page?');
+                const wantToContinue = window.confirm('File uploaded successfully. Do you want to go to the Upload TXT page?');
                 //if yes, choice -true,  if cancle, choice can be false.
-                console.log('choice:',makeChoice);
-                if (makeChoice === true) {
-                    onUploadSuccess(); // Call the function passed from App
+                console.log('choice:',wantToContinue);
+                if (wantToContinue === true) {
+                    onContinueAfterUpload();// Call the function passed from App
                     // Optionally, call a function passed from the parent component
                 } else {
                    // do nothing, stay in current page
@@ -53,6 +55,7 @@ export const UploadCsv = ({ onUploadSuccess }) => {
                 </div>
             }
         ></Upload> 
+        
         </div>
         );
     
