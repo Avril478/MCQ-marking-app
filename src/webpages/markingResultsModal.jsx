@@ -9,6 +9,7 @@ export function MarkingResultsModal(props) {
         size="lg"
         aria-labelledby="contained-modal-title-vcenter"
         centered
+        style={{ backdropFilter: "blur(10px)" }}
       >
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter">

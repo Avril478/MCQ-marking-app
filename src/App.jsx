@@ -1,27 +1,26 @@
-
-import './App.css'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import {ProgressBar, Button} from 'react-bootstrap';
-import  {PopoutPage}  from './webpages/popoutPage.jsx'; // Adjust the path if necessary
-
-
-
-
+import React, { useState } from 'react';
+import { UploadCsv } from './webpages/uploadCsv';
+import { UploadTxt } from './webpages/uploadTxt'; // Adjust the import path as needed
+import './App.css';
 
 function App() {
-  const now =60;
+  const [showUploadTxt, setShowUploadTxt] = useState(false);
 
-  return(
+  const handleUploadSuccess = () => {
+    setShowUploadTxt(true);
+  };
+
+  return (
     <div className="App">
-      <header className='App-header'>
-  <ProgressBar now={now} label={`${now}%`} variant="success" />
-  
-    </header>
-    <PopoutPage />
-    
+      <header className='App-header'></header>
+
+      {showUploadTxt ? (
+        <UploadTxt />
+      ) : (
+        <UploadCsv onUploadSuccess={handleUploadSuccess} />
+      )}
     </div>
-    
-  )
+  );
 }
 
 export default App;

@@ -5,11 +5,8 @@ import { ConfirmationModal } from './confirmationModal'; // Import the new modal
 import { HistogramModal } from './histogramModal'; // Import the new modal component
 
 
-
-
   
-  
-  export function PopoutPage() {
+  export function PopoutEntry() {
 
     const [markingResultsModalShow, setMarkingResultsModalShow] = useState(false);
     const [histogramModalShow, setHistogramModalShow] = useState(false);
@@ -32,12 +29,10 @@ import { HistogramModal } from './histogramModal'; // Import the new modal compo
         setMarkingResultsModalShow(false);// Show the confirmation modal after download
       };
     
-
-    
     return (
       <>
         <Button variant="primary" onClick={() => setMarkingResultsModalShow(true)}>
-          Launch Marking Results Modal
+          Launch 
         </Button>
 
         <MarkingResultsModal
