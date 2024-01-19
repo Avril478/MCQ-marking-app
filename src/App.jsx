@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { UploadCsv } from './webpages/uploadCsv';
 import { UploadTxt } from './webpages/uploadTxt'; 
-import { HistogramModal } from './webpages/histogramModal'; // Import your HistogramModal component
-import { ConfirmationModal } from './webpages/confirmationModal'; // Import your ConfirmationModal component
-import { MarkingResults } from './webpages/markingResults'; // Import your MarkingResults component
+import { HistogramModal } from './webpages/histogramModal'; 
+import { ConfirmationModal } from './webpages/confirmationModal';
+import { MarkingResults } from './webpages/markingResults'; 
 import './App.css';
 
 function App() {
@@ -39,9 +39,9 @@ function App() {
 
       {/* csv:T->F txt:F->T result:F histogram:F confirmation:F   
     state changed then start codes again, go into showUploadCsv?
-    {/*csv:T->F txt:F->T->F result:F->T histogram:F confirmation:F   
+    csv:T->F txt:F->T->F result:F->T histogram:F confirmation:F   
     state changed then start codes again, go into showUploadCsv?
-    /*csv:T->F txt:F->T->F result:F->T histogram:F->T confirmation:F->T   
+    csv:T->F txt:F->T->F result:F->T histogram:F->T confirmation:F->T   
     state changed then start codes again, go into showUploadCsv? again */}
       {showUploadCsv ? (
         <UploadCsv onContinueAfterUpload={handleContinueAfterUploadCsv} />
@@ -62,8 +62,15 @@ function App() {
        )}
 
       {showConfirmationModal && (
-        <ConfirmationModal onHide={() => setShowConfirmationModal(false)} />
+        <ConfirmationModal
+          onHide={() => setShowConfirmationModal(false)}
+          onYes={() => {
+            setShowConfirmationModal(false);
+            setShowUploadCsv(true); 
+          }}
+        />
       )}
+      
       
     </div>
   );
