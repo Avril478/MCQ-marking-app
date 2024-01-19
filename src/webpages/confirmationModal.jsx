@@ -1,12 +1,14 @@
 import { Modal, Button } from 'react-bootstrap';
 
 export function ConfirmationModal(props) {
+  console.log('confirmationModal executed')
   return (
     <Modal
       {...props}
       size="md"
       aria-labelledby="confirmation-modal-title"
       centered
+      show={true}
       className="custom-modal" 
     >
         

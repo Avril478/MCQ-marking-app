@@ -5,10 +5,14 @@ import UploadIcon from '../assets/upload.png';
 export const UploadTxt = ({ onContinueAfterUpload }) => {
    
     let limit = 1;
-    let onChange = props => {
+    function onChange(event) {
         // Assuming props.fileList is an array of objects
-        props.fileList.forEach((file) => {
+        console.log('event.fileList.length:',event.fileList.length)
+
+        event.fileList.forEach((file) => {
             console.log('bbbbbb-file.status', file.status);
+            
+
             // Access the 'status' key of each file object
             if(file.status === 'success'){
                 console.log('Upload successful-file(obj)', file);
@@ -34,7 +38,6 @@ export const UploadTxt = ({ onContinueAfterUpload }) => {
             accept=".txt"
             limit={limit}
             onChange={onChange}
-            dragIcon
             dragMainText={
                 <div>
                     <div style={{ fontSize: '27px', fontWeight: 'bold', marginTop:'50px',marginBottom:'30px'}}>

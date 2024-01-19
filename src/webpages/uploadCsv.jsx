@@ -2,35 +2,36 @@ import React from 'react';
 import { Upload } from '@douyinfe/semi-ui';
 import UploadIcon from '../assets/upload.png'; 
 
-
-export const UploadCsv = ({ onContinueAfterUpload }) => {
-    
+//how to find which objects in the props?
+//go to App.jsx find <UploadCsv tag content. found 'onContinueAfterUpload', so props including 1 object
+//which is onContinueAfterUpload
+export const UploadCsv = (props ) => {
+    //name   props or {onContinueAfterUpload}, do not have ()
     let limit = 1;
-    let onChange = props => {
-        // Assuming props.fileList is an array of objects
-        props.fileList.forEach((file) => {
+    function onChange(event) {
+        console.log('event.fileList.length:', event.fileList.length)
+        // React event.fileList is an array of objects
+        event.fileList.forEach((file) => {
             console.log('aaaaa-file.status:', file.status);
             // Access the 'status' key of each file object
             if(file.status === 'success'){
                 console.log('Upload successful-file', file);
                 console.log('Upload successful-file.name', file.name);
-
                 // Ask the user if they want to proceed
                 const wantToContinue = window.confirm('File uploaded successfully. Do you want to go to the Upload TXT page?');
                 //if yes, choice -true,  if cancle, choice can be false.
                 console.log('choice:',wantToContinue);
                 if (wantToContinue === true) {
-                    onContinueAfterUpload();// Call the function passed from App
-                    // Optionally, call a function passed from the parent component
+                    props.onContinueAfterUpload();
+                    //or onContinueAfterUpload();   
+                    // means Call the 'function' passed from App.jsx so have ()
                 } else {
                    // do nothing, stay in current page
                 }
             }
         });
     };
-    // if (uploadSuccess) {
-    //     return <UploadTxt/>;
-    // }
+    
         return (
             <div style={{ paddingBottom: '100px' }}>
             <Upload
@@ -39,7 +40,6 @@ export const UploadCsv = ({ onContinueAfterUpload }) => {
             accept=".csv"
             limit={limit}
             onChange={onChange}
-            dragIcon
             dragMainText={
                 <div>
                     <div style={{ fontSize: '27px', fontWeight: 'bold', marginTop:'50px',marginBottom:'30px'}}>
