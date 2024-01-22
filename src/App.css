@@ -7,14 +7,14 @@
   text-align: center;
   place-items: center;
   display: flex;
-  
-}
 
+}
 
 
 /* important must be used in the css file, can not use in the internal jsx style */
 .custom-modal .modal-content {
-  border-radius: 30px !important; /* 使用 !important 确保覆盖其他样式 */
+  border-radius: 30px !important;
+  /* 使用 !important 确保覆盖其他样式 */
 }
 
 .semi-upload-drag-area {
@@ -28,7 +28,7 @@
   align-items: center;
   flex-direction: column;
   cursor: pointer;
-  }
+}
 
 .semi-upload-file-card {
   border-radius: var(--semi-border-radius-medium);
@@ -37,10 +37,11 @@
   width: 300px;
   background-color: var(--semi-color-fill-0);
   cursor: pointer;
-  margin-top:30px;
+  margin-top: 30px;
   padding-left: 8px;
-  
+
 }
-.semi-upload-drag-area-icon{
+
+.semi-upload-drag-area-icon {
   display: none;
 }
