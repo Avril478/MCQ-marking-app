@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+  border: 2px dashed blue;
+  font-size: larger;
+  font-weight: bold;
+}
+
+.isDragging {
+  background-color: rgb(81, 205, 133);
+}
+
+.fileContentsViewer {
+  border: 1px solid black;
+  padding: 10px;
+  background-color: rgb(240, 240, 255);
+}
+
+.error {
+  color: darkred;
+  background-color: lightcoral;
+  padding: 10px;
+  text-align: center;
+}
+
+.fileSaveContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

@@ -1,62 +1,111 @@
-import React from 'react';
-import { Upload } from '@douyinfe/semi-ui';
-import UploadIcon from '../assets/upload.png';
+import React, { useState } from 'react';
+//import UploadIcon from '../assets/upload.png';
+import styles from "./uploadCsv.module.css";
 
-//how to find which objects in the props?
-//go to App.jsx find <UploadCsv tag content. found 'onContinueAfterUpload', so props including 1 object
-//which is onContinueAfterUpload
-export const UploadCsv = (props) => {
-    //name   props or {onContinueAfterUpload}, do not have ()
-    let limit = 1;
-    function onChange(event) {
-        console.log('event.fileList.length:', event.fileList.length)
-        // React event.fileList is an array of objects
-        event.fileList.forEach((file) => {
-            console.log('aaaaa-file.status:', file.status);
-            // Access the 'status' key of each file object
-            if (file.status === 'success') {
-                console.log('Upload successful-file', file);
-                console.log('Upload successful-file.name', file.name);
-                // Ask the user if they want to proceed
-                props.goToNextStep();
-                //if yes, choice -true,  if cancle, choice can be false.
-                // console.log('choice:',wantToContinue);
-                // if (wantToContinue === true) {
-                //     props.onContinueAfterUpload();
-                //     //or onContinueAfterUpload();   
-                //     // means Call the 'function' passed from App.jsx so have ()
-                // } else {
-                //    // do nothing, stay in current page
-                // }
-            }
-        });
-    };
+/**
+ * A component which allows users to drag and drop files. Exposes an onFilesDropped event
+ * which can be handled in order to process those files.
+ *
+ * Adapted from code found on MDN.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/HTML_Drag_and_Drop_API/File_drag_and_drop
+ *
+ * @param {{onFilesDropped: function(File[])}} props component props.
+ */
+export function UploadCsv(props) {
+    const [fileContents, setFileContents] = useState("");
+    const [isError, setError] = useState(false);
+    const [isDragging, setDragging] = useState(false);
+    /**
+     * Handles a "drop" event onto this component.
+     *
+     * @param {React.DragEvent<HTMLDivElement>} e
+     */
+    function handleFilesDropped(files) {
+        setError(false);
+        setFileContents("");
+        //why still reset value again? clear fileContents after each successful drag?
 
+        const firstFile = files[0];
+
+        // Read the first file which was dropped
+        const reader = new FileReader();
+        reader.readAsText(firstFile, "UTF-8");
+        reader.onload = handleReadSuccess;
+        reader.onerror = () => setError(true);
+    }
+
+    function handleReadSuccess(e) {
+        setFileContents(e.target.result);
+        console.log('your uploaded:', e.target.result);
+        props.goToNextStep();
+    }
+
+    function handleDrop(e) {
+        e.preventDefault();
+        setDragging(false);
+
+        // Array to store files which have been dropped
+        let files = [];
+
+        // Check the "items" list in the event. Goes through and adds all files here to the array.
+        if (e.dataTransfer.items) {
+            const items = [...e.dataTransfer.items];
+            items.forEach((i) => {
+                if (i.kind === "file") files.push(i.getAsFile());
+            });
+        }
+
+        // Check the "files" list in the event.
+        else {
+            files = [...e.dataTransfer.files];
+        }
+
+        // Raise our onFilesDropped event to be handled by the parent.
+        //change comment line to new codes to call handleFilesDropped
+        // if (onFilesDropped) onFilesDropped(files);
+        if (handleFilesDropped) {
+            handleFilesDropped(files);
+        }
+    }
+
+
+    /**
+     * Essentially this component is a div which handles the appropriate drag events.
+     *
+     * onDragEnter and onDragLeave will turn "on" and "off" the "isDragging" CSS class,
+     * so we can style differently depending on if the user is hovering over the component
+     * with a file.
+     *
+     * onDragOver we don't want to do anything, so we use preventDefault().
+     *
+     * onDrop is the one we want to handle, so we do that with the function above.
+     */
     return (
-        <div style={{ paddingBottom: '100px' }}>
-            <Upload
-                action="https://api.semi.design/upload"
-                draggable={true}
-                accept=".csv"
-                limit={limit}
-                onChange={onChange}
-                dragMainText={
-                    <div>
-                        <div style={{ fontSize: '27px', fontWeight: 'bold', marginTop: '50px', marginBottom: '30px' }}>
-                            Upload Your Rubric
-                        </div>
-                        <img src={UploadIcon} alt="Upload Icon" style={{ width: '50px', height: '50px', margin: '0 auto 10px' }} />
-                        <div style={{ margin: '40px 60px' }}>Click to upload files or drag files here</div>
-                    </div>
-                }
-                dragSubText={
-                    <div style={{ fontSize: '15px', marginTop: '30px', marginBottom: '30px' }}>
-                        Only .csv file
-                    </div>
-                }
-            ></Upload>
+        <>
 
-        </div>
+            <div
+                className={
+                    isDragging
+                        ? `${styles.container} ${styles.isDragging}`
+                        : styles.container
+                }
+
+                onDragEnter={() => setDragging(true)}
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={handleDrop}
+                onDragLeave={() => setDragging(false)}
+            >
+                Drag your CSV Rubric to upload!
+            </div>
+            {
+                isError ? (
+                    <p className={styles.error}>There was an error processing the file!</p>
+                ) : undefined
+            }
+
+            <h2>File contents:</h2>
+            <pre className={styles.fileContentsViewer}>{fileContents}</pre>
+        </>
     );
-
-};
+}

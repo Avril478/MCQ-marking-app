@@ -45,3 +45,30 @@
 .semi-upload-drag-area-icon {
   display: none;
 }
+
+/* .form {
+  border: 1px dotted black;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+} */
+
+.fileContentsViewer {
+  border: 1px solid black;
+  padding: 10px;
+  background-color: rgb(240, 240, 255);
+}
+
+.error {
+  color: darkred;
+  background-color: lightcoral;
+  padding: 10px;
+  text-align: center;
+}
+
+.fileSaveContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
