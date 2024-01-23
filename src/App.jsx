@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { UploadCsv } from './webpages/uploadCsv';
-import { UploadTxt } from './webpages/uploadTxt';
+import { UploadFile } from './webpages/uploadFile';
 import { MarkingResults } from './webpages/markingResults';
 import { HistogramModal } from './webpages/histogramModal';
 import { ConfirmationModal } from './webpages/confirmationModal';
@@ -13,7 +12,9 @@ function App() {
   const [current, setCurrent] = useState(0);
   const { Step } = Steps;
   const [isCsvUploaded, setIsCsvUploaded] = useState(false);
+  const [csvFileContents, setCsvFileContents] = useState("");
   const [isTxtUploaded, setIsTxtUploaded] = useState(false);
+  const [txtFileContents, setTxtFileContents] = useState("");
   const [showHistogramModal, setShowHistogramModal] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
@@ -36,9 +37,15 @@ function App() {
   const renderCurrentStep = () => {
     switch (current) {
       case 0:
-        return <UploadCsv goToNextStep={goToNextStep} />;
+        return <UploadFile fileType="text/csv" goToNextStep={(fileContents) => {
+          setCsvFileContents(fileContents);
+          goToNextStep();
+        }}>Please upload your Rubric.csv file!</UploadFile>;
       case 1:
-        return <UploadTxt goToNextStep={goToNextStep} />;
+        return <UploadFile fileType="text/plain" goToNextStep={(fileContents) => {
+          setTxtFileContents(fileContents);
+          goToNextStep();
+        }} >Please upload your MCQ.txt file !</UploadFile>;
       case 2:
         return <MarkingResults
           onOpenHistogramModal={handleOpenHistogramModal}
