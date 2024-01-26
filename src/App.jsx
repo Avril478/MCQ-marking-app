@@ -5,6 +5,7 @@ import { HistogramModal } from './webpages/histogramModal';
 import { ConfirmationModal } from './webpages/confirmationModal';
 import { Steps } from '@douyinfe/semi-ui';
 import './App.css';
+import { processFiles } from './dataProcessing/file-processor';
 
 
 function App() {
@@ -17,6 +18,18 @@ function App() {
   const [txtFileContents, setTxtFileContents] = useState("");
   const [showHistogramModal, setShowHistogramModal] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+
+  if (csvFileContents.length > 0 && txtFileContents.length > 0) {
+    // returns data that looks like:
+    // const dataArray = [
+    //   ['ID', 'Surname', 'Name', 'Version', 'Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Total'],
+    //   ['723647626', 'SURNAMEX', 'NAMEX', '4', 0, 0, 0, 1.0, 1.5, 2.5],
+    //   ['823748762', 'SURNAMEY', 'NAMEY', '3', 0, 1.0, 0, 0, 1.5, 2.5],
+    //   ['893749857', 'SURNAMEZ', 'NAMEZ', '2', 0.5, 0, 0, 0, 0, 0.5],
+    //   ['376473643', 'SURNAMEW', 'NAMEW', '1', 0.5, 1.0, 1.0, 1.0, 1.5, 5.0]
+    // ];
+    const processedData = processFiles(csvFileContents, txtFileContents);
+  }
 
   const handleStepChange = (index) => {
     if (index === 1 && !isCsvUploaded && current < 1) {
@@ -37,15 +50,19 @@ function App() {
   const renderCurrentStep = () => {
     switch (current) {
       case 0:
-        return <UploadFile fileType="text/csv" goToNextStep={(fileContents) => {
+        return <UploadFile fileType="text/csv" fileExt="csv" goToNextStep={(fileContents) => {
           setCsvFileContents(fileContents);
+
           goToNextStep();
-        }}>Please upload your Rubric.csv file!</UploadFile>;
+        }}>Please click or drag & drop your Rubric.csv file here!</UploadFile>;
       case 1:
-        return <UploadFile fileType="text/plain" goToNextStep={(fileContents) => {
+        return <UploadFile fileType="text/plain" fileExt="txt" goToNextStep={(fileContents) => {
           setTxtFileContents(fileContents);
+
+
+
           goToNextStep();
-        }} >Please upload your MCQ.txt file !</UploadFile>;
+        }} >Please click or drag & drop your MCQ.txt file here!</UploadFile>;
       case 2:
         return <MarkingResults
           onOpenHistogramModal={handleOpenHistogramModal}

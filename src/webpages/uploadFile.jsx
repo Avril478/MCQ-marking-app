@@ -26,10 +26,12 @@ export function UploadFile(props) {
 
     // Handles files dropped onto the component
     function handleFileDropped(file) {
+        console.log('file', file);
         setError(false);
 
 
         const reader = new FileReader();
+        //FileReader.readAsText must be an instance, so file must be an instance not a array
         reader.readAsText(file, "UTF-8");
         reader.onload = handleReadSuccess;
         reader.onerror = () => setError(true);
@@ -37,7 +39,9 @@ export function UploadFile(props) {
 
     function handleReadSuccess(e) {
 
-        console.log('your uploaded:', e.target.result);
+        console.log('your uploaded content details:', e.target.result);
+
+
         props.goToNextStep(e.target.result);
     }
 
@@ -49,35 +53,44 @@ export function UploadFile(props) {
         let files = [];
 
         // Check the "items" list in the event. Goes through and adds all files here to the array.
+
+        //why do we need this if? prefer delete if condition
+        //codes are from the mozilla, so no need to worried a lot
         if (e.dataTransfer.items) {
             const items = [...e.dataTransfer.items];
+            //items means everything in array-files(pdf,svg,txt,svc...), buttons...
+            console.log('items:', items);
+            //[DataTransferItem, DataTransferItem, DataTransferItem] means [button, pdf,csv..]
             items.forEach((i) => {
                 if (i.kind === "file") {
                     const file = i.getAsFile();
+                    //file is not null / undefined && type is svc/txt
                     if (file && file.type === props.fileType) {
                         files.push(file);
                     }
                 }
             });
+            console.log('file go into for each', files)
         }
+        //files is [.svc,.svc,.svc....]
+        console.log('file else', files)
 
         // Check the "files" list in the event.
-        else {
-            files = [...e.dataTransfer.files].filter(file => file.type === props.fileType);
+        // else {
+        //     console.log('else Files, before filter', files);
+        //     files = [...e.dataTransfer.files].filter(file => file.type === props.fileType);
+        //     console.log('else Files after filter', files);
 
-
-        }
-        //console.log('Files dropped:', files.map(file => file.type));
-        //console.log('Number of files processed:', files.length); // Debugging log
+        // }
 
         // Raise our onFilesDropped event to be handled by the parent.
-        //change comment line to new codes to call handleFilesDropped
-        // if (onFilesDropped) onFilesDropped(files);
+
         if (files.length === 1) {
             handleFileDropped(files[0]);
+            // parameter should not be array, should be element in array, so can not use files.
         } else {
             // Alert the user and reset state
-            alert(`Please drag and drop only one ${props.fileType} file!`);
+            alert(`Please drag and drop only one ${props.fileExt} file!`);
             setError(false);
         }
     }
@@ -103,9 +116,9 @@ export function UploadFile(props) {
                         ? `${styles.container} ${styles.isDragging}`
                         : styles.container
                 }
-
+                //click
                 onClick={handleContainerClick}
-
+                //drag drop
                 onDragEnter={() => setDragging(true)}
                 onDragOver={(e) => e.preventDefault()}
                 onDrop={handleDrop}
