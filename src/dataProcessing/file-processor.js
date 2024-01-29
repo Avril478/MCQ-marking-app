@@ -6,7 +6,8 @@ export function processFiles(csvFile, txtFile) {
     const result = [];
 
     // Calculate the number of questions from the rubric
-    const numberOfQuestions = linesRubric[1].split(',').length - 1;
+    const numberOfQuestions = linesRubric.length - 1;
+
 
     const replacements = {
         '01': 'A',
@@ -50,7 +51,7 @@ export function processFiles(csvFile, txtFile) {
         }
 
         const secondPart = a1.slice(0, markArr.length);
-        const marks = secondPart.filter(j => typeof j === 'number');
+        const marks = secondPart.filter(j => typeof j === 'float');
         const total = marks.reduce((acc, curr) => acc + curr, 0);
 
         const lineResult = [...firstPart, ...secondPart, total];
@@ -63,5 +64,6 @@ export function processFiles(csvFile, txtFile) {
     const title2 = ['Total'];
     const wholeTitle = [...title1, ...qList, ...title2];
     result.unshift(wholeTitle);
+    console.log('processor:', result)
     return result;
 }
