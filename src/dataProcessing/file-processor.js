@@ -51,13 +51,18 @@ export function processFiles(csvFile, txtFile) {
             markArr.push(eachQuestionMark);
         }
 
+        console.log('111111:', [...a1]);
+
         for (let i = 0; i < eachVersionAnswerArr.length; i++) {
-            if (a1[i] === eachVersionAnswerArr[i]) {
+            console.log(a1[i], eachVersionAnswerArr[i]);
+            if (a1[i] && a1[i] === eachVersionAnswerArr[i]) {
                 a1[i] = markArr[i];
             } else {
                 a1[i] = 0;
             }
         }
+
+        console.log('aaaaa', [...a1]);
 
         const secondPart = a1.slice(0, markArr.length);
         const marks = secondPart.filter(j => typeof j === 'number');
