@@ -1,9 +1,18 @@
 export function processFiles(csvFile, txtFile) {
     console.log(csvFile, txtFile);
 
-    const linesMCQ = txtFile.split('\n');
-    const linesRubric = csvFile.split('\n');
     const result = [];
+    const linesRubric = csvFile.split('\n');
+    const linesMCQ = txtFile.split('\n');
+    let filteredLinesMCQ = [];
+    linesMCQ.forEach(m => {
+        let first11Chars = m.substring(0, 11);
+        let isAllDigits = /^\d+$/.test(first11Chars); // Regular expression to check if all are digits
+
+        if (isAllDigits) {
+            filteredLinesMCQ.push(m);
+        }
+    });
 
     // Calculate the number of questions from the rubric
     const numberOfQuestions = linesRubric.length - 1;
@@ -18,7 +27,7 @@ export function processFiles(csvFile, txtFile) {
         '  ': ' '
     };
 
-    for (const line of linesMCQ) {
+    for (const line of filteredLinesMCQ) {
         let studentAnswerArea = line.substring(45);
         const id = line.substring(2, 11).trim();
         const surname = line.substring(12, 20).trim();
@@ -51,7 +60,7 @@ export function processFiles(csvFile, txtFile) {
         }
 
         const secondPart = a1.slice(0, markArr.length);
-        const marks = secondPart.filter(j => typeof j === 'float');
+        const marks = secondPart.filter(j => typeof j === 'number');
         const total = marks.reduce((acc, curr) => acc + curr, 0);
 
         const lineResult = [...firstPart, ...secondPart, total];
