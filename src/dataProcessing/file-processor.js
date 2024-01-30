@@ -30,8 +30,8 @@ export function processFiles(csvFile, txtFile) {
     for (const line of filteredLinesMCQ) {
         let studentAnswerArea = line.substring(45);
         const id = line.substring(2, 11).trim();
-        const surname = line.substring(12, 20).trim();
-        const familyName = line.substring(25, 30).trim();
+        const surname = line.substring(12, 25).trim();
+        const familyName = line.substring(25, 33).trim();
         const version = line.substring(43, 44);
         const firstPart = [id, surname, familyName, version];
 
@@ -72,7 +72,7 @@ export function processFiles(csvFile, txtFile) {
         result.push(lineResult);
     }
 
-    const title1 = ['id', 'surname', 'name', 'version'];
+    const title1 = ['Id', 'Surname', 'Name', 'Version'];
     // Create qList based on the number of questions
     const qList = [...Array(numberOfQuestions).keys()].map(i => `Q${i + 1}`);
     const title2 = ['Total'];

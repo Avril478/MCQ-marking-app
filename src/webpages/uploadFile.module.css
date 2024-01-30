@@ -30,3 +30,7 @@
   flex-direction: column;
   gap: 10px;
 }
+
+.semi-card-header {
+  padding: 20px;
+}

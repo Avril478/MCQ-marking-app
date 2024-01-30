@@ -1,7 +1,6 @@
 import Histogram from '../assets/histogram.png';
 import { Card, Button } from '@douyinfe/semi-ui';
-//import { processFiles } from "../dataProcessing/file-processor.js";
-import { CSVLink } from 'react-csv';
+
 
 
 export function MarkingResults({ onOpenHistogramModal, onOpenConfirmationModal, markingResult }) {
@@ -10,7 +9,7 @@ export function MarkingResults({ onOpenHistogramModal, onOpenConfirmationModal, 
   const { Meta } = Card;
 
   const tableRows = markingResult.map((row, index) => (
-    <tr key={index}>
+    <tr key={index} style={index === 0 ? { fontWeight: 'bold' } : {}}>
       {row.map((cell, cellIndex) => <td key={cellIndex}>{cell}</td>)}
     </tr>
   ));
@@ -19,13 +18,23 @@ export function MarkingResults({ onOpenHistogramModal, onOpenConfirmationModal, 
   const blob = new Blob([csvData], { type: 'text/csv' });
   const csvUrl = URL.createObjectURL(blob);
 
+
   return (
     <Card
-      style={{ maxWidth: 340 }}
+      style={{
+        maxWidth: '900px',
+        minWidth: '500px',
+        marginTop: '60px',
+        border: '5px solid #800080',
+        boxShadow: '0px 0px 6px 0px #800080',
+      }}
       title={
-        <Meta
-          title="Preview of the Marks (.csv)"
-        />
+        <div style={{
+          fontSize: '20px', fontWeight: 'bold',
+          margin: '25px'
+        }}> {/* Explicit styling */}
+          Preview of the Marks (.csv)
+        </div>
       }
       headerExtraContent={
         <img
@@ -41,31 +50,47 @@ export function MarkingResults({ onOpenHistogramModal, onOpenConfirmationModal, 
           onClick={onOpenHistogramModal}
         />
       }
-      cover={
-        <div style={{ overflow: 'auto', maxHeight: '200px' }}>
-          <table>
+    >
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+
+      }}>
+        <div style={{ overflow: 'auto', maxHeight: '300px' }}>
+          <table style={{ width: '100%', textAlign: 'left' }}> {/* Adjust table style */}
             <tbody>
               {tableRows}
             </tbody>
           </table>
         </div>
-      }
-    >
-      {/*button in the <a></a> tag. so click button, trigger csvUrl */}
-      <a
-        href={csvUrl}
-        download="results.csv"
-        style={{ textDecoration: 'none' }}
-      >
-        <Button
-          theme="solid"
-          type="primary"
-          style={{ margin: '-30px 200px' }}
-          onClick={onOpenConfirmationModal}
-        >
-          Download
-        </Button>
-      </a>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'flex-end',
+          width: '100%',
+          marginTop: '10px',
+        }}>
+          {/*button in the <a></a> tag. so click button, trigger csvUrl */}
+          <a
+            href={csvUrl}
+            download="results.csv"
+            style={{ textDecoration: 'none' }}
+          >
+            <Button
+              theme="solid"
+              type="primary"
+              style={{
+                fontSize: '16px',
+                padding: '20px 20px',
+                margin: '0px'
+              }}
+              onClick={onOpenConfirmationModal}
+            >
+              Download
+            </Button>
+          </a>
+        </div>
+      </div>
     </Card>
   )
 }
