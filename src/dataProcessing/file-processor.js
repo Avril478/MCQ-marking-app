@@ -45,16 +45,20 @@ export function processFiles(csvFile, txtFile) {
 
         for (const lineRubric of linesRubric.slice(1)) {
             const lineArr = lineRubric.split(',');
-            const eachQuestionAnswer = lineArr[parseInt(version)];
+            let eachQuestionAnswer = lineArr[parseInt(version)];
+            //delete the lines break \r  change "A\r" to "A" in rubric
+            eachQuestionAnswer = eachQuestionAnswer.replace(/(\r\n|\n|\r)/gm, "")
+            console.log('xxxxx', eachQuestionAnswer)
             eachVersionAnswerArr.push(eachQuestionAnswer);
             const eachQuestionMark = parseFloat(lineArr[0]);
             markArr.push(eachQuestionMark);
         }
 
-        console.log('111111:', [...a1]);
+        // console.log('111111:', [...a1]);
 
         for (let i = 0; i < eachVersionAnswerArr.length; i++) {
-            console.log(a1[i], eachVersionAnswerArr[i]);
+            // console.log('student answer', a1[i])
+            // console.log('correct answer', eachVersionAnswerArr[i])
             if (a1[i] && a1[i] === eachVersionAnswerArr[i]) {
                 a1[i] = markArr[i];
             } else {
@@ -62,7 +66,7 @@ export function processFiles(csvFile, txtFile) {
             }
         }
 
-        console.log('aaaaa', [...a1]);
+        // console.log('aaaaa', [...a1]);
 
         const secondPart = a1.slice(0, markArr.length);
         const marks = secondPart.filter(j => typeof j === 'number');
@@ -78,6 +82,5 @@ export function processFiles(csvFile, txtFile) {
     const title2 = ['Total'];
     const wholeTitle = [...title1, ...qList, ...title2];
     result.unshift(wholeTitle);
-    console.log('processor:', result)
     return result;
 }
