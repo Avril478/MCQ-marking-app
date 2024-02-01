@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-//import UploadIcon from '../assets/upload.png';
 import styles from "./uploadFile.module.css";
 
 /**
@@ -21,6 +20,7 @@ export function UploadFile(props) {
 
     // Simulates a click on the file input when the container is clicked
     function handleContainerClick() {
+        fileInputRef.current.value = null;
         fileInputRef.current.click();
     }
 

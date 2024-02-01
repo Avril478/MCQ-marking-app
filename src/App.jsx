@@ -68,11 +68,17 @@ function App() {
         }}>Please click or drag & drop your Rubric.csv file here!</UploadFile>;
       case 1:
         return <UploadFile fileType="text/plain" fileExt="txt" goToNextStep={(fileContents) => {
-          setTxtFileContents(fileContents);
-          //txtFile content details
+
+          try {
+            //isValidCSVFile(fileContents);
+            setTxtFileContents(fileContents);
+            goToNextStep();
+          }
+          catch (error) {
+            alert(error);
+          }
 
 
-          goToNextStep();
         }} >Please click or drag & drop your MCQ.txt file here!</UploadFile>;
       case 2:
         return <MarkingResults
