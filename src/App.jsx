@@ -73,6 +73,9 @@ function App() {
             //isValidCSVFile(fileContents);
             setTxtFileContents(fileContents);
             goToNextStep();
+            //it should be render after the Result page display?
+            console.log('alertalert')
+            alert('We only display data which ID has at least one digit!')
           }
           catch (error) {
             alert(error);
