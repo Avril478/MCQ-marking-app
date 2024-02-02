@@ -73,7 +73,6 @@ export function UploadFile(props) {
             console.log('file go into for each', files)
         }
         //files is [.svc,.svc,.svc....]
-        console.log('file else', files)
 
         // Check the "files" list in the event.
         // else {

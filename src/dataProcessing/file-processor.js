@@ -5,12 +5,11 @@ export function processFiles(csvFile, txtFile) {
 
     const linesRubric = csvFile.split('\n');
     const linesMCQ = txtFile.split('\n');
-
     let filteredLinesMCQ = [];
+
     linesMCQ.forEach(m => {
         let first11Chars = m.substring(0, 11);
-        let atLeastOneDigit = /\d/.test(first11Chars); // Regular expression to check if all are digits
-
+        let atLeastOneDigit = /\d/.test(first11Chars);
         if (atLeastOneDigit) {
             filteredLinesMCQ.push(m);
         }
@@ -92,20 +91,39 @@ export function processFiles(csvFile, txtFile) {
     return result;
 }
 
-// export function isValidCSVFile(csvFileContents) {
-//     for (const line of filteredLinesMCQ) {
-//         let isSpaceAfterID = line[11] == " ";
-//         let versionValid = ['1', '2', '3', '4'].includes(line[43]);
-//         let IsSpaceAfterVersion = line[44] == " ";
+export function isValidTxtFile(txtFile) {
+    const lines = txtFile.split('\n');
+    let errorMessages = [];
+
+    lines.forEach((line, index) => {
+        // 定义错误检查逻辑
+        let isSpaceAfterID = line[11] === " ";
+        let versionValid = ['1', '2', '3', '4'].includes(line[43]);
+        let isSpaceBeforeAnswers = line[44] === " ";
+
+        // 收集错误原因
+        let reasons = [];
+        if (!isSpaceAfterID) reasons.push("There should a space between ID and surname");
+        if (!isSpaceBeforeAnswers) reasons.push("There should a space between version and answers ");
+        if (!versionValid) reasons.push("unvalid version");
+
+        // 如果有错误，添加到错误消息列表中
+        if (reasons.length > 0) {
+            errorMessages.push(`Line${index + 1}error：${line.trim()} - Reason：${reasons.join(", ")}`);
+        }
+    });
+
+    //如果有错误消息，抛出错误
+    if (errorMessages.length > 0) {
+        throw (errorMessages.join("\n"));// Return an object with 'test'
+    }
+
+}
+export function histogramData(result) {
+    const titles = result[0]; // except you need to trim the first few and the last one
+
+    const values = []; // do some processing here
 
 
-
-
-//     }
-//     // loop thru every line in file contents
-//     // each line must have space after id
-//     // each line must have space before answers
-//     // each line must have valid version
-//     const x = 400;
-//     throw `Line ${x}: Must have a space after id`;
-// }
+    return { titles, values };
+}
