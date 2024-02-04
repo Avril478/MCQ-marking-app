@@ -2,10 +2,12 @@ export function processFiles(csvFile, txtFile) {
     console.log(csvFile, txtFile);
 
     const result = [];
+    let container = [];
 
     const linesRubric = csvFile.split('\n');
     const linesMCQ = txtFile.split('\n');
     let filteredLinesMCQ = [];
+
 
     linesMCQ.forEach(m => {
         let first11Chars = m.substring(0, 11);
@@ -50,6 +52,7 @@ export function processFiles(csvFile, txtFile) {
         const eachVersionAnswerArr = [];
         const markArr = [];
 
+
         for (const lineRubric of linesRubric.slice(1)) {
             const lineArr = lineRubric.split(',');
             let eachQuestionAnswer = lineArr[parseInt(version)];
@@ -60,7 +63,7 @@ export function processFiles(csvFile, txtFile) {
             markArr.push(eachQuestionMark);
         }
 
-        // console.log('111111:', [...a1]);
+
 
         for (let i = 0; i < eachVersionAnswerArr.length; i++) {
 
@@ -71,15 +74,19 @@ export function processFiles(csvFile, txtFile) {
             }
         }
 
-        // console.log('aaaaa', [...a1]);
-
         const secondPart = a1.slice(0, markArr.length);
-        const marks = secondPart.filter(j => typeof j === 'number');
-        const total = marks.reduce((acc, curr) => acc + curr, 0);
+        //[1,2,0,0.5,0,1]
+
+
+        const total = secondPart.reduce((acc, curr) => acc + curr, 0);
 
         const lineResult = [...firstPart, ...secondPart, total];
         result.push(lineResult);
+
+        container = markArr;
     }
+
+
 
     const title1 = ['Id', 'Surname', 'Name', 'Version'];
     // Create qList based on the number of questions
@@ -88,6 +95,8 @@ export function processFiles(csvFile, txtFile) {
     const title2 = ['Total'];
     const wholeTitle = [...title1, ...qList, ...title2];
     result.unshift(wholeTitle);
+    console.log('result:', result)
+    //console.log('container:', container) 
     return result;
 }
 
@@ -120,10 +129,18 @@ export function isValidTxtFile(txtFile) {
 
 }
 export function histogramData(result) {
-    const titles = result[0]; // except you need to trim the first few and the last one
+    //how to access container here?
 
-    const values = []; // do some processing here
+    const titles = result[0].slice(4, -1); // except you need to trim the first few and the last one
 
+    const values = new Array(titles.length).fill(0);
+    result.slice(1).forEach(row => {
+        row.slice(4, -1).forEach((score, index) => {
+            values[index] += Number(score);
+        });
+    });
+    const finalValues = values.map((value, index) => value / container[index]);
 
-    return { titles, values };
+    console.log('value:', finalValues)
+    return { titles, finalValues };
 }

@@ -6,7 +6,7 @@ import { Card, Button } from '@douyinfe/semi-ui';
 export function MarkingResults({ onOpenHistogramModal, onOpenConfirmationModal, markingResult }) {
   console.log('markingResult:', markingResult);
 
-  const { Meta } = Card;
+
 
   const tableRows = markingResult.map((row, index) => (
     <tr key={index} style={index === 0 ? { fontWeight: 'bold' } : {}}>
