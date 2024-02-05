@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styles from "./uploadFile.module.css";
+import { Modal } from '@douyinfe/semi-ui';
+
 
 /**
  * A component which allows users to drag and drop files. Exposes an onFilesDropped event
@@ -89,7 +91,9 @@ export function UploadFile(props) {
             // parameter should not be array, should be element in array, so can not use files.
         } else {
             // Alert the user and reset state
-            alert(`Please drag and drop only one ${props.fileExt} file!`);
+
+            Modal.error({ 'title': `Please drag and drop only one ${props.fileExt} file!` });
+
             setError(false);
         }
     }

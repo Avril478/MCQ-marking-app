@@ -1,4 +1,4 @@
-import { processFiles } from "./file-processor.js";
+import { processFiles } from "./file-processor.jsx";
 
 const txtFile = `01723647626 SURNAMEX     NAMEX   76100000004 04  040801                                                                                                                                                                                                 
 01823748762 SURNAMEY     NAMEY   76100000003 0402081601                                                                                                                                                                                                 

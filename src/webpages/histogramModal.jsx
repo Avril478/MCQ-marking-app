@@ -1,7 +1,7 @@
 import Cancel from '../assets/cancel.png';
 import { Modal } from 'react-bootstrap';
 import ReactECharts from 'echarts-for-react';
-import { histogramData as getHistogramData } from '../dataProcessing/file-processor';
+import { histogramData as getHistogramData } from '../dataProcessing/file-processor.jsx';
 
 //how to find which objects in the props?
 //go to App.jsx find <HistogramModal tag content. found 'onHide', so props including 1 object
@@ -20,7 +20,7 @@ export function HistogramModal({ onHide, data }) {
     },
     series: [
       {
-        data: histogramChartData.values,
+        data: histogramChartData.finalValues,
         type: 'bar'
       }
     ]
@@ -41,7 +41,7 @@ export function HistogramModal({ onHide, data }) {
     >
       <Modal.Header>
         <Modal.Title id="contained-histogram-title" style={{ width: '100%', textAlign: 'center' }}>
-          % of wrong answer
+          The number of students who answered each question correctly
         </Modal.Title>
         {/*{props.onHide}*/}
         <img src={Cancel} alt="Close" style={{ cursor: 'pointer', marginRight: '10px', width: '2em' }} onClick={onHide} />

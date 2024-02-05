@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { UploadFile } from './webpages/uploadFile';
 import { MarkingResults } from './webpages/markingResults';
-import { processFiles, isValidTxtFile } from "./dataProcessing/file-processor.js";
+import { processFiles, isValidTxtFile } from "./dataProcessing/file-processor.jsx";
 import { HistogramModal } from './webpages/histogramModal';
 import { ConfirmationModal } from './webpages/confirmationModal';
-import { Steps } from '@douyinfe/semi-ui';
+import { Modal, Steps, Toast } from '@douyinfe/semi-ui';
+import { IconSend } from '@douyinfe/semi-icons';
 import './App.css';
 
 
@@ -24,13 +25,16 @@ function App() {
 
 
 
+
   const handleStepChange = (index) => {
     if (index === 1 && !isCsvUploaded && current < 1) {
-      alert('Please upload CSV file first');
+      Modal.warning({ 'title': 'Warning: Please upload CSV file first！' });
+
+
       return;
     }
     if (index === 2 && !isTxtUploaded && current < 2) {
-      alert('Please upload TXT file first');
+      Modal.warning({ 'title': 'Warning: Please upload TXT file first' });
       return;
     }
     setCurrent(index);
@@ -38,19 +42,16 @@ function App() {
 
   const goToNextStep = () => {
     setCurrent((prevCurrent) => prevCurrent + 1);
+    Toast.destroyAll();
+
   };
 
   useEffect(() => {
     if (csvFileContents.length > 0 && txtFileContents.length > 0) {
       // const dataArray = [
       //   ['ID', 'Surname', 'Name', 'Version', 'Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Total'],
-      //   ['723647626', 'SURNAMEX', 'NAMEX', '4', 0, 0, 0, 1.0, 1.5, 2.5],
-      //   ['823748762', 'SURNAMEY', 'NAMEY', '3', 0, 1.0, 0, 0, 1.5, 2.5],
-      //   ['893749857', 'SURNAMEZ', 'NAMEZ', '2', 0.5, 0, 0, 0, 0, 0.5],
-      //   ['376473643', 'SURNAMEW', 'NAMEW', '1', 0.5, 1.0, 1.0, 1.0, 1.5, 5.0]
-      // ];
+      //   ['723647626', 'SURNAMEX', 'NAMEX', '4', 0, 0, 0, 1.0, 1.5, 2.5]]
       const result = processFiles(csvFileContents, txtFileContents);
-
 
       setProcessedData(result);
     }
@@ -60,24 +61,38 @@ function App() {
   const renderCurrentStep = () => {
     switch (current) {
       case 0:
+        Toast.destroyAll()
         return <UploadFile fileType="text/csv" fileExt="csv" goToNextStep={(fileContents) => {
           setCsvFileContents(fileContents);
+
           //csvFile content details
 
           goToNextStep();
         }}>Please click or drag & drop your Rubric.csv file here!</UploadFile>;
       case 1:
+        Toast.destroyAll()
         return <UploadFile fileType="text/plain" fileExt="txt" goToNextStep={(fileContents) => {
 
           try {
             isValidTxtFile(fileContents);
             setTxtFileContents(fileContents);
             goToNextStep();
-            //it should be render after the Result page display?
-            alert('We only display data which ID has at least one digit!')
+
+            Toast.info({
+              content: 'We only display data which ID has at least one digit!',
+              duration: 0,
+              theme: 'light',
+            })
+
+
           }
           catch (error) {
-            alert(error);
+            Toast.destroyAll()
+            Toast.error({
+              content: error,
+              duration: 0,
+              theme: 'light',
+            })
           }
 
 

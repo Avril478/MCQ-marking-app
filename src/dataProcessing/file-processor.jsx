@@ -1,8 +1,12 @@
+import React, { useState, useEffect } from 'react';
+
+let container = [];
+
 export function processFiles(csvFile, txtFile) {
     console.log(csvFile, txtFile);
 
     const result = [];
-    let container = [];
+    //let container = [];
 
     const linesRubric = csvFile.split('\n');
     const linesMCQ = txtFile.split('\n');
@@ -95,8 +99,8 @@ export function processFiles(csvFile, txtFile) {
     const title2 = ['Total'];
     const wholeTitle = [...title1, ...qList, ...title2];
     result.unshift(wholeTitle);
-    console.log('result:', result)
-    //console.log('container:', container) 
+    //console.log('result:', result)
+    console.log('container:', container)
     return result;
 }
 
@@ -105,26 +109,38 @@ export function isValidTxtFile(txtFile) {
     let errorMessages = [];
 
     lines.forEach((line, index) => {
-        // 定义错误检查逻辑
+
         let isSpaceAfterID = line[11] === " ";
         let versionValid = ['1', '2', '3', '4'].includes(line[43]);
         let isSpaceBeforeAnswers = line[44] === " ";
 
-        // 收集错误原因
-        let reasons = [];
-        if (!isSpaceAfterID) reasons.push("There should a space between ID and surname");
-        if (!isSpaceBeforeAnswers) reasons.push("There should a space between version and answers ");
-        if (!versionValid) reasons.push("unvalid version");
 
-        // 如果有错误，添加到错误消息列表中
+        let reasons = [];
+        if (!isSpaceAfterID) reasons.push("should have a space after ID");
+        if (!isSpaceBeforeAnswers) reasons.push("should have a space before answers ");
+        if (!versionValid) reasons.push("invalid version");
+
+
         if (reasons.length > 0) {
             errorMessages.push(`Line${index + 1}error：${line.trim()} - Reason：${reasons.join(", ")}`);
+            console.log('errorMessage:', errorMessages)
+
+            //how to add one line after each error?
+
+            // errorMessages.map((row, index) => (
+            //     <td key={index} style={{ paddingBottom: '10px' }}>{row}</td>
+            // )
+            // );
+
         }
+
     });
 
     //如果有错误消息，抛出错误
     if (errorMessages.length > 0) {
-        throw (errorMessages.join("\n"));// Return an object with 'test'
+        //['line1 error....', 'Line2 error...', 'line3 error...'];
+        throw (errorMessages.join('\n'));
+        //join array to a string, each element by \n
     }
 
 }
@@ -141,6 +157,6 @@ export function histogramData(result) {
     });
     const finalValues = values.map((value, index) => value / container[index]);
 
-    console.log('value:', finalValues)
+    console.log('value:', values)
     return { titles, finalValues };
 }
