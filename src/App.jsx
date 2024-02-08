@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { UploadFile } from './webpages/uploadFile';
 import { MarkingResults } from './webpages/markingResults';
-import { processFiles, isValidTxtFile } from "./dataProcessing/file-processor.jsx";
+import { processFiles, isValidTxtFile } from "./dataProcessing/file-processor.js";
 import { HistogramModal } from './webpages/histogramModal';
 import { ConfirmationModal } from './webpages/confirmationModal';
 import { Modal, Steps, Toast } from '@douyinfe/semi-ui';
-import { IconSend } from '@douyinfe/semi-icons';
 import './App.css';
 
 
 
 function App() {
+
 
   const [current, setCurrent] = useState(0);
   const { Step } = Steps;
@@ -18,7 +18,7 @@ function App() {
   const [csvFileContents, setCsvFileContents] = useState("");
   const [isTxtUploaded, setIsTxtUploaded] = useState(false);
   const [txtFileContents, setTxtFileContents] = useState("");
-  const [processedData, setProcessedData] = useState([]);
+  const [processedData, setProcessedData] = useState({ result: [], container: [] });
 
   const [showHistogramModal, setShowHistogramModal] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
@@ -86,10 +86,10 @@ function App() {
 
 
           }
-          catch (error) {
+          catch (errors) {
             Toast.destroyAll()
             Toast.error({
-              content: error,
+              content: errors.map((e, i) => (<p key={i}>{e}</p>)),
               duration: 0,
               theme: 'light',
             })
@@ -100,7 +100,7 @@ function App() {
       case 2:
 
         return <MarkingResults
-          markingResult={processedData}
+          markingResult={processedData.result}
           onOpenHistogramModal={handleOpenHistogramModal}
           onOpenConfirmationModal={handleOpenConfirmationModal}
           resetToFirstStep={resetToFirstStep}

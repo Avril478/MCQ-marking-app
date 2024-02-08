@@ -1,14 +1,14 @@
 import Cancel from '../assets/cancel.png';
 import { Modal } from 'react-bootstrap';
 import ReactECharts from 'echarts-for-react';
-import { histogramData as getHistogramData } from '../dataProcessing/file-processor.jsx';
+import { histogramData as getHistogramData } from '../dataProcessing/file-processor.js';
 
 //how to find which objects in the props?
 //go to App.jsx find <HistogramModal tag content. found 'onHide', so props including 1 object
 //which is onHide. if have many obj, you can write as function HistogramModal({ onHide, onYes}) {...
 export function HistogramModal({ onHide, data }) {
 
-  const histogramChartData = getHistogramData(data);
+  const histogramChartData = getHistogramData(data.result, data.container);
 
   const option = {
     xAxis: {

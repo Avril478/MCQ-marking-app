@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 
-let container = [];
+
 
 export function processFiles(csvFile, txtFile) {
     console.log(csvFile, txtFile);
 
     const result = [];
-    //let container = [];
 
     const linesRubric = csvFile.split('\n');
     const linesMCQ = txtFile.split('\n');
     let filteredLinesMCQ = [];
+    let container = [];
 
 
     linesMCQ.forEach(m => {
@@ -43,7 +43,7 @@ export function processFiles(csvFile, txtFile) {
         const surname = line.substring(12, 25).trim();
         const familyName = line.substring(25, 33).trim();
 
-        const version = line[43];
+        const version = line.substring(36, 44).trim();
 
 
         const firstPart = [id, surname, familyName, version];
@@ -67,7 +67,7 @@ export function processFiles(csvFile, txtFile) {
             markArr.push(eachQuestionMark);
         }
 
-
+        container = markArr;
 
         for (let i = 0; i < eachVersionAnswerArr.length; i++) {
 
@@ -86,8 +86,6 @@ export function processFiles(csvFile, txtFile) {
 
         const lineResult = [...firstPart, ...secondPart, total];
         result.push(lineResult);
-
-        container = markArr;
     }
 
 
@@ -100,8 +98,7 @@ export function processFiles(csvFile, txtFile) {
     const wholeTitle = [...title1, ...qList, ...title2];
     result.unshift(wholeTitle);
     //console.log('result:', result)
-    console.log('container:', container)
-    return result;
+    return { result, container };
 }
 
 export function isValidTxtFile(txtFile) {
@@ -122,16 +119,8 @@ export function isValidTxtFile(txtFile) {
 
 
         if (reasons.length > 0) {
-            errorMessages.push(`Line${index + 1}error：${line.trim()} - Reason：${reasons.join(", ")}`);
+            errorMessages.push(`Line ${index + 1} error：${line.trim()} - Reason：${reasons.join(", ")}`);
             console.log('errorMessage:', errorMessages)
-
-            //how to add one line after each error?
-
-            // errorMessages.map((row, index) => (
-            //     <td key={index} style={{ paddingBottom: '10px' }}>{row}</td>
-            // )
-            // );
-
         }
 
     });
@@ -139,12 +128,12 @@ export function isValidTxtFile(txtFile) {
     //如果有错误消息，抛出错误
     if (errorMessages.length > 0) {
         //['line1 error....', 'Line2 error...', 'line3 error...'];
-        throw (errorMessages.join('\n'));
+        throw (errorMessages);
         //join array to a string, each element by \n
     }
 
 }
-export function histogramData(result) {
+export function histogramData(result, container) {
     //how to access container here?
 
     const titles = result[0].slice(4, -1); // except you need to trim the first few and the last one
