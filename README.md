@@ -1,15 +1,25 @@
 Welcome to Avril's App!!!!!!
 This is an offline desktop app which is for UOA lecturers to automatically mark students' MCQ questions.
 
+Figma link: <https://www.figma.com/file/vJwX7KJFHcVs1ErbDmjfkt/MCQ-app?type=design&node-id=0%3A1&mode=dev&t=sqe2vsWOxzDW8ACh-1>
+
 Quick Start!
 
 1. you should have already installed NodeJs
 2. to check if you have node: node -v
 3. to check npm: npm -v
-4. navigate into the app folder, then run npm install to install dependencies
+4. Run npm install in this folder to install dependencies
 5. then npm run dev to start the dev server (which supports hot reloading).
 6. It should create a server running on localhost:5173.
 7. if you are a macOS user, press command+click URL to open the application window.
+
+Building for production:
+
+1. Run npm run build in this folder, it will create a "dist" folder with your production-ready webapp
+2. Navigate into ebuild folder
+3. Run npm install in the ebuild folder to install Electron dependencies (only need to do this the first time)
+4. Copy the dist folder into the ebuild folder (delete the old ebuild dist folder first)
+5. Run npm run make in the ebuild folder to build the desktop app
 
 Instructions:
 

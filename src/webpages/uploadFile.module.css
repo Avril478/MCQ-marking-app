@@ -6,10 +6,11 @@
   border: 2px dashed blue;
   font-size: larger;
   font-weight: bold;
+
 }
 
 .isDragging {
-  background-color: rgb(81, 205, 133);
+  background-color: rgb(142, 240, 150);
 }
 
 .fileContentsViewer {

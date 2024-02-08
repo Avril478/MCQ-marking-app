@@ -46,13 +46,7 @@
   display: none;
 }
 
-/* .form {
-  border: 1px dotted black;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-} */
+
 
 .fileContentsViewer {
   border: 1px solid black;

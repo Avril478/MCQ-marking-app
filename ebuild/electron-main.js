@@ -8,9 +8,9 @@ const startLocalServer = (done) => {
   console.log("startServer() called");
   localServerApp.use(express.json({ limit: "100mb" }));
   localServerApp.use(cors());
-  localServerApp.use(express.static(path.join(__dirname, "webapp")));
+  localServerApp.use(express.static(path.join(__dirname, "dist")));
   localServerApp.get("*", (req, res) => {
-    return res.sendFile(path.join(__dirname, "webapp/index.html"));
+    return res.sendFile(path.join(__dirname, "dist/index.html"));
   });
   localServerApp.listen(PORT, async () => {
     console.log("Server Started on PORT ", PORT);
