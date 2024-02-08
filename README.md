@@ -1,21 +1,36 @@
-Title
- A desktop application for automarking teleform results
+Welcome to Avril's App!!!!!!
+This is an offline desktop app which is for UOA lecturers to automatically mark students' MCQ questions.
 
-Background
-In the University of Auckland, the assessment of student performance in multiple-choice questions often involves the use of teleforms. Students complete these forms, and the examination office scans them to produce a text file containing the student responses. This text file, along with a marking rubric, is then used by course coordinators to grade the assessment.
+Figma link: <https://www.figma.com/file/vJwX7KJFHcVs1ErbDmjfkt/MCQ-app?type=design&node-id=0%3A1&mode=dev&t=sqe2vsWOxzDW8ACh-1>
 
-As the text file is not provided in a common format, such as CSV, it makes it challenging for course coordinators to efficiently open and process the data using commonly used tools like Excel. To address this issue and reduce the workload for course coordinators, the project aims to develop a desktop application capable of parsing the text file provided by the examination office and automating the grading process.
+Quick Start!
 
-Objective
-The main objective of this project is to develop a desktop application that automates the marking of teleforms. The system will take student answers in a specific format provided by the examination office, along with a marking rubric, and generate grades for each student.
+1. you should have already installed NodeJs
+2. to check if you have node: node -v
+3. to check npm: npm -v
+4. Run npm install in this folder to install dependencies
+5. then npm run dev to start the dev server (which supports hot reloading).
+6. It should create a server running on localhost:5173.
+7. if you are a macOS user, press command+click URL to open the application window.
 
-Target Outcomes
-A MacOS (or preferably cross-platform) desktop application will be developed to parse the text file containing student answers and the rubric. The application will then compute the grades and produce a .csv file containing the results.
+Building for production:
 
-Student Involvement
-1. Design of a user-friendly and intuitive GUI for the application, enabling efficient file upload and download operations.
-2. Implementation of the following features:
-- Functionality supporting the interface for uploading and downloading files.
-- Parsing functionality for the text file containing student answers and the marking rubric, capable of handling common errors (such as missing answers or names).
-- Functionality to compute grades and convert them into a CSV file.
+1. Run npm run build in this folder, it will create a "dist" folder with your production-ready webapp
+2. Navigate into ebuild folder
+3. Run npm install in the ebuild folder to install Electron dependencies (only need to do this the first time)
+4. Copy the dist folder into the ebuild folder (delete the old ebuild dist folder first)
+5. Run npm run make in the ebuild folder to build the desktop app
 
+Instructions:
+
+1. upload csv file -->rubric, which should be the same format as src/assets/rubric.csv or rubric.png
+2. upload txt file -->students answer, which should be the same format as src/assets/data-example.txt
+3. there should be a space between ID and name, also a space between test version and answers.
+4. version should be between 00000001 and 99999999
+5. the txt format should make 3 conditions all true, otherwise it will show the error toast.
+6. you can also click the histogram icon to open the data analysis.
+7. click download button to download result as csv file.
+8. you can also click steps bar to go back to previous pages, but you can not skip steps.
+9. if you click NO in the final pop out window, the application will automatically close.
+
+The app is also built as zip, you can directly download zip and use it without any npm stuff.

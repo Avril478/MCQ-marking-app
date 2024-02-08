@@ -1,0 +1,37 @@
+{
+  "name": "marking-app",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "test": "node src/dataProcessing/file-processor-test.js"
+  },
+  "dependencies": {
+    "@douyinfe/semi-ui": "^2.51.0",
+    "antd": "^5.13.1",
+    "bootstrap": "^5.3.2",
+    "echarts": "^5.4.3",
+    "echarts-for-react": "^3.0.2",
+    "element-react": "^1.4.34",
+    "element-theme-default": "^1.4.13",
+    "react": "^18.2.0",
+    "react-bootstrap": "^2.9.2",
+    "react-csv": "^2.2.2",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.21.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react-swc": "^3.5.0",
+    "eslint": "^8.55.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "vite": "^5.0.8"
+  }
+}

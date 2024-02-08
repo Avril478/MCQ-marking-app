@@ -1,0 +1,76 @@
+/* make all components in the middle */
+
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  text-align: center;
+  place-items: center;
+  display: flex;
+
+}
+
+
+/* important must be used in the css file, can not use in the internal jsx style */
+.custom-modal .modal-content {
+  border-radius: 30px !important;
+  /* 使用 !important 确保覆盖其他样式 */
+}
+
+.semi-upload-drag-area {
+  border-radius: var(--semi-border-radius-small);
+  border: 4px dashed var(--semi-color-border);
+  width: 100%;
+  padding: 10px;
+  background-color: var(--semi-color-tertiary-light-default);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.semi-upload-file-card {
+  border-radius: var(--semi-border-radius-medium);
+  display: flex;
+  height: 82px;
+  width: 300px;
+  background-color: var(--semi-color-fill-0);
+  cursor: pointer;
+  margin-top: 30px;
+  padding-left: 8px;
+
+}
+
+.semi-upload-drag-area-icon {
+  display: none;
+}
+
+
+
+.fileContentsViewer {
+  border: 1px solid black;
+  padding: 10px;
+  background-color: rgb(240, 240, 255);
+}
+
+.error {
+  color: darkred;
+  background-color: lightcoral;
+  padding: 10px;
+  text-align: center;
+}
+
+.fileSaveContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.semi-card-header {
+  padding: 10px;
+}
+
+.semi-card-header-wrapper-spacing {
+  margin-right: 0px;
+}
