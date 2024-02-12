@@ -1,7 +1,7 @@
 Welcome to Avril's App!!!!!!
 This is an offline desktop app which is for UOA lecturers to automatically mark students' MCQ questions.
 
-Figma link: <https://www.figma.com/file/vJwX7KJFHcVs1ErbDmjfkt/MCQ-app?type=design&node-id=0%3studentAnswerArr&mode=dev&t=sqe2vsWOxzDW8ACh-1>
+Figma link: <https://www.figma.com/file/vJwX7KJFHcVs1ErbDmjfkt/MCQ-app?type=design&node-id=0%3A1&mode=dev&t=sqe2vsWOxzDW8ACh-1>
 
 my email: kwan380@aucklanduni.ac.nz
 
