@@ -8,9 +8,7 @@ import { Modal, Steps, Toast } from '@douyinfe/semi-ui';
 import './App.css';
 
 
-
 function App() {
-
 
   const [current, setCurrent] = useState(0);
   const { Step } = Steps;
@@ -18,61 +16,54 @@ function App() {
   const [csvFileContents, setCsvFileContents] = useState("");
   const [isTxtUploaded, setIsTxtUploaded] = useState(false);
   const [txtFileContents, setTxtFileContents] = useState("");
-  const [processedData, setProcessedData] = useState({ result: [], container: [] });
 
+  //pay attention to here, it is not {[]}, must have the key:value here
+  const [processedData, setProcessedData] = useState({ result: [], container: [] });
   const [showHistogramModal, setShowHistogramModal] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-
-
-
-
+  // if skip the steps
   const handleStepChange = (index) => {
     if (index === 1 && !isCsvUploaded && current < 1) {
       Modal.warning({ 'title': 'Warning: Please upload CSV file first！' });
-
-
       return;
     }
     if (index === 2 && !isTxtUploaded && current < 2) {
-      Modal.warning({ 'title': 'Warning: Please upload TXT file first' });
+      Modal.warning({ 'title': 'Warning: Please upload TXT file first!' });
       return;
     }
     setCurrent(index);
   };
-
   const goToNextStep = () => {
     setCurrent((prevCurrent) => prevCurrent + 1);
+    // make toast display, because if not, duration=0: display all the time
     Toast.destroyAll();
-
   };
-
   useEffect(() => {
     if (csvFileContents.length > 0 && txtFileContents.length > 0) {
       // const dataArray = [
       //   ['ID', 'Surname', 'Name', 'Version', 'Q1', 'Q2', 'Q3', 'Q4', 'Q5', 'Total'],
-      //   ['723647626', 'SURNAMEX', 'NAMEX', '4', 0, 0, 0, 1.0, 1.5, 2.5]]
+      //   ['723647626', 'SURNAMEX', 'NAMEX', '4', 0, 0, 0, 1.0, 1.5, 2.5]]..
       const result = processFiles(csvFileContents, txtFileContents);
-
+      //this result means result+container
+      //processedData= result + container
       setProcessedData(result);
     }
   }, [csvFileContents, txtFileContents]);
 
-
   const renderCurrentStep = () => {
     switch (current) {
+
       case 0:
         Toast.destroyAll()
         return <UploadFile fileType="text/csv" fileExt="csv" goToNextStep={(fileContents) => {
           setCsvFileContents(fileContents);
-
           //csvFile content details
-
           goToNextStep();
-        }}>Please click or drag & drop your Rubric.csv file here!</UploadFile>;
+        }}>Please upload Rubric.csv file!</UploadFile>;
+
       case 1:
         Toast.destroyAll()
         return <UploadFile fileType="text/plain" fileExt="txt" goToNextStep={(fileContents) => {
-
           try {
             isValidTxtFile(fileContents);
             setTxtFileContents(fileContents);
@@ -83,23 +74,23 @@ function App() {
               duration: 0,
               theme: 'light',
             })
-
-
           }
           catch (errors) {
+
             Toast.destroyAll()
             Toast.error({
+              //each <p> </p> has a blank line between them.
+              //adjust error format here, not in the upload file.
               content: errors.map((e, i) => (<p key={i}>{e}</p>)),
               duration: 0,
               theme: 'light',
             })
           }
+        }} >Please upload MCQ.txt file!</UploadFile>;
 
-
-        }} >Please click or drag & drop your MCQ.txt file here!</UploadFile>;
       case 2:
-
         return <MarkingResults
+          // only use result to display in the markingResult page.
           markingResult={processedData.result}
           onOpenHistogramModal={handleOpenHistogramModal}
           onOpenConfirmationModal={handleOpenConfirmationModal}
@@ -109,7 +100,6 @@ function App() {
         return <UploadCsv goToNextStep={goToNextStep} />;
     }
   };
-
 
   const handleOpenHistogramModal = () => {
     // Open the HistogramModal when called
@@ -125,7 +115,6 @@ function App() {
     setCurrent(0);
   };
 
-
   return (
     <div className="App">
       <header className="App-header"></header>
@@ -134,14 +123,11 @@ function App() {
         <Step title="MCQ" />
         <Step title="Results" />
       </Steps>
-
       {/* show the current step card content*/}
       {renderCurrentStep()}
-
       {showHistogramModal && (
         <HistogramModal onHide={() => setShowHistogramModal(false)} data={processedData} />
       )}
-
       {showConfirmationModal && (
         <ConfirmationModal
           onHide={() => setShowConfirmationModal(false)}

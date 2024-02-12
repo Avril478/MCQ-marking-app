@@ -1,5 +1,6 @@
 import { processFiles } from "./file-processor.js";
 
+//run npm test to test these input, the purpose is skipping the browser, just focus on the file-processor codes.
 const txtFile = `01723647626 SURNAMEX     NAMEX   76100000004 04  040801                                                                                                                                                                                                 
 01823748762 SURNAMEY     NAMEY   76100000003 0402081601                                                                                                                                                                                                 
 01893749857 SURNAMEZ     NAMEZ   76100000002 021616  08                              

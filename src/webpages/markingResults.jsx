@@ -4,9 +4,6 @@ import { Card, Button } from '@douyinfe/semi-ui';
 
 
 export function MarkingResults({ onOpenHistogramModal, onOpenConfirmationModal, markingResult }) {
-  console.log('markingResult:', markingResult);
-
-
 
   const tableRows = markingResult.map((row, index) => (
     <tr key={index} style={index === 0 ? { fontWeight: 'bold' } : {}}>
@@ -17,7 +14,17 @@ export function MarkingResults({ onOpenHistogramModal, onOpenConfirmationModal, 
   const csvData = markingResult.map(row => row.join(',')).join('\n');
   const blob = new Blob([csvData], { type: 'text/csv' });
   const csvUrl = URL.createObjectURL(blob);
+  function changeBackground(e) {
+    e.target.style.background = 'rgba(187, 170, 227, 0.82)';
+    e.target.style.borderRadius = '50%';
+    e.target.style.boxShadow = '0 0 20px 10px rgba(187, 170, 227)'; // Adds a blurred boundary
+  }
 
+  // New function to remove the background style
+  function removeBackground(e) {
+    e.target.style.background = '';
+    e.target.style.boxShadow = '';
+  }
 
   return (
     <Card
@@ -25,14 +32,14 @@ export function MarkingResults({ onOpenHistogramModal, onOpenConfirmationModal, 
         maxWidth: '900px',
         minWidth: '500px',
         marginTop: '60px',
-        border: '5px solid #800080',
-        boxShadow: '0px 0px 6px 0px #800080',
+        border: '5px solid #673AB7',
+        boxShadow: '0px 0px 5px 5px #673AB7',
       }}
       title={
         <div style={{
           fontSize: '20px', fontWeight: 'bold',
           margin: '25px'
-        }}> {/* Explicit styling */}
+        }}>
           Preview of the Marks (.csv)
         </div>
       }
@@ -47,6 +54,8 @@ export function MarkingResults({ onOpenHistogramModal, onOpenConfirmationModal, 
             verticalAlign: 'middle',
             cursor: 'pointer',
           }}
+          onMouseOver={changeBackground}
+          onMouseLeave={removeBackground}
           onClick={onOpenHistogramModal}
         />
       }
@@ -55,7 +64,6 @@ export function MarkingResults({ onOpenHistogramModal, onOpenConfirmationModal, 
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-
       }}>
         <div style={{ overflow: 'auto', maxHeight: '300px' }}>
           <table style={{ width: '100%', textAlign: 'left' }}> {/* Adjust table style */}

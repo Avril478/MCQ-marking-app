@@ -1,8 +1,10 @@
 import { Modal, Button } from 'react-bootstrap';
 
 export function ConfirmationModal(props) {
-  console.log('confirmationModal executed')
+
+
   return (
+
     <Modal
       {...props}
       size="md"
@@ -11,7 +13,6 @@ export function ConfirmationModal(props) {
       show={true}
       className="custom-modal"
     >
-
       <Modal.Body style={{
         backgroundColor: '#E6E6FA',
         textAlign: 'center',
@@ -23,14 +24,14 @@ export function ConfirmationModal(props) {
         </h4>
         <Button
           variant="danger"
-          style={{ margin: '0.5rem', padding: '0.5rem 3rem', borderRadius: '10px' }} // Increase padding to make button wider
+          style={{ margin: '0.5rem', padding: '0.5rem 3rem', borderRadius: '10px' }}
           onClick={() => window.close()}
         >
           NO
         </Button>
         <Button
           variant="success"
-          style={{ margin: '0.5rem', padding: '0.5rem 3rem', borderRadius: '10px' }} // Increase padding to make button wider
+          style={{ margin: '0.5rem', padding: '0.5rem 3rem', borderRadius: '10px' }}
           onClick={props.onYes}
         >
           YES
