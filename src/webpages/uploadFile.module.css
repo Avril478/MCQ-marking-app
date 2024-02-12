@@ -1,16 +1,24 @@
 .container {
+  margin-top: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 50px;
-  border: 2px dashed blue;
+  border: 4px dashed rgba(0, 0, 255, 0.4);
   font-size: larger;
   font-weight: bold;
+  flex-direction: column;
+
 
 }
 
+.container:hover {
+  /* Set the background color to light purple on hover */
+  border-color: rgb(25, 0, 255);
+}
+
 .isDragging {
-  background-color: rgb(142, 240, 150);
+  background-color: rgb(42, 228, 10);
 }
 
 .fileContentsViewer {

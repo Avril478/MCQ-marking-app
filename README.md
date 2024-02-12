@@ -1,7 +1,9 @@
 Welcome to Avril's App!!!!!!
 This is an offline desktop app which is for UOA lecturers to automatically mark students' MCQ questions.
 
-Figma link: <https://www.figma.com/file/vJwX7KJFHcVs1ErbDmjfkt/MCQ-app?type=design&node-id=0%3A1&mode=dev&t=sqe2vsWOxzDW8ACh-1>
+Figma link: <https://www.figma.com/file/vJwX7KJFHcVs1ErbDmjfkt/MCQ-app?type=design&node-id=0%3studentAnswerArr&mode=dev&t=sqe2vsWOxzDW8ACh-1>
+
+my email: kwan380@aucklanduni.ac.nz
 
 Quick Start!
 
@@ -32,5 +34,15 @@ Instructions:
 7. click download button to download result as csv file.
 8. you can also click steps bar to go back to previous pages, but you can not skip steps.
 9. if you click NO in the final pop out window, the application will automatically close.
+
+id : between index 2 and index 10;
+surname : between index 12 and 24;
+familyName : between index 25 and 32;
+version : between index 36 and 43;
+studentAnswerString : starts from index 45;
+your space must be in 2 places:
+One is index 11
+The other is index 44
+eg: 01013881863 JFMMMMMMMMMMMNBRENNNN36700000002 020116010416080204020408
 
 The app is also built as zip, you can directly download zip and use it without any npm stuff.

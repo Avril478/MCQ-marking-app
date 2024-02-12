@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from "./uploadFile.module.css";
+import uploadIcon from '../assets/upload.png';
 import { Modal } from '@douyinfe/semi-ui';
 
 
@@ -16,22 +17,17 @@ import { Modal } from '@douyinfe/semi-ui';
 export function UploadFile(props) {
     const [isError, setError] = useState(false);
     const [isDragging, setDragging] = useState(false);
-
     // Reference to the hidden file input element
     const fileInputRef = React.createRef();
-
     // Simulates a click on the file input when the container is clicked
     function handleContainerClick() {
         fileInputRef.current.value = null;
         fileInputRef.current.click();
     }
-
     // Handles files dropped onto the component
     function handleFileDropped(file) {
         console.log('file', file);
         setError(false);
-
-
         const reader = new FileReader();
         //FileReader.readAsText must be an instance, so file must be an instance not a array
         reader.readAsText(file, "UTF-8");
@@ -40,10 +36,7 @@ export function UploadFile(props) {
     }
 
     function handleReadSuccess(e) {
-
         console.log('your uploaded content details:', e.target.result);
-
-
         props.goToNextStep(e.target.result);
     }
 
@@ -53,9 +46,7 @@ export function UploadFile(props) {
 
         // Array to store files which have been dropped
         let files = [];
-
         // Check the "items" list in the event. Goes through and adds all files here to the array.
-
         //why do we need this if? prefer delete if condition
         //codes are from the mozilla, so no need to worried a lot
         if (e.dataTransfer.items) {
@@ -77,8 +68,8 @@ export function UploadFile(props) {
         //files is [.svc,.svc,.svc....]
 
         // Check the "files" list in the event.
+        // else part from mozilla
         // else {
-        //     console.log('else Files, before filter', files);
         //     files = [...e.dataTransfer.files].filter(file => file.type === props.fileType);
         //     console.log('else Files after filter', files);
 
@@ -88,12 +79,10 @@ export function UploadFile(props) {
 
         if (files.length === 1) {
             handleFileDropped(files[0]);
-            // parameter should not be array, should be element in array, so can not use files.
+            // parameter should not be array, should be element in array, so can not use 'files'.
         } else {
             // Alert the user and reset state
-
             Modal.error({ 'title': `Please drag and drop only one ${props.fileExt} file!` });
-
             setError(false);
         }
     }
@@ -127,8 +116,23 @@ export function UploadFile(props) {
                 onDrop={handleDrop}
                 onDragLeave={() => setDragging(false)}
             >
-                {props.children}
+                <p style={{ fontSize: '30px' }}>{props.children}</p>
+                <img
+                    src={uploadIcon}
+                    alt="uploadIcon"
+                    style={{
+                        width: '80px',
+                        height: '80px',
+                        cursor: 'pointer',
+                    }}
+                />
+                <p></p>
+                <p></p>
+                <p>Please click here</p>
+                <p>or</p>
+                <p>Drag & Drop file</p>
             </div>
+
             {
                 isError ? (
                     <p className={styles.error}>There was an error processing the file!</p>
@@ -142,8 +146,6 @@ export function UploadFile(props) {
                 style={{ display: 'none' }}
                 onChange={(e) => handleFileDropped(e.target.files[0])}
             />
-
-
         </>
     );
 }

@@ -31,7 +31,6 @@ export function HistogramModal({ onHide, data }) {
   return (
     <Modal
       {...onHide}
-      // {...props}
       size="lg"
       aria-labelledby="contained-histogram-title"
       centered
