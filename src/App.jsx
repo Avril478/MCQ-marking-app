@@ -24,11 +24,23 @@ function App() {
   // if skip the steps
   const handleStepChange = (index) => {
     if (index === 1 && !isCsvUploaded && current < 1) {
-      Modal.warning({ 'title': 'Warning: Please upload CSV file first！' });
+      Modal.warning({
+        'title': 'Warning: Please upload CSV file first！',
+        'okText': 'OK',
+        'cancelButtonProps': {
+          style: { display: 'none' } // Hides the cancel button
+        },
+      });
       return;
     }
     if (index === 2 && !isTxtUploaded && current < 2) {
-      Modal.warning({ 'title': 'Warning: Please upload TXT file first!' });
+      Modal.warning({
+        'title': 'Warning: Please upload TXT file first!',
+        'okText': 'OK',
+        'cancelButtonProps': {
+          style: { display: 'none' } // Hides the cancel button
+        },
+      });
       return;
     }
     setCurrent(index);
