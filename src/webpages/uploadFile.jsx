@@ -82,7 +82,13 @@ export function UploadFile(props) {
             // parameter should not be array, should be element in array, so can not use 'files'.
         } else {
             // Alert the user and reset state
-            Modal.error({ 'title': `Please drag and drop only one ${props.fileExt} file!` });
+            Modal.error({
+                'title': `Please drag and drop only one ${props.fileExt} file!`,
+                'okText': 'OK',
+                'cancelButtonProps': {
+                    style: { display: 'none' } // Hides the cancel button
+                },
+            });
             setError(false);
         }
     }
